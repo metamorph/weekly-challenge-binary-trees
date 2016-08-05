@@ -39,3 +39,31 @@
       (= current value) (assoc node :deleted? true)
       (< value current) (assoc node :left (delete (:left node) value))
       (> value current) (assoc node :right (delete (:right node) value)))))
+
+(defn interleave-all
+  "Stolen from https://www.refheap.com/121957"
+  [& colls]
+  (lazy-seq
+   (when-let [non-empties (seq (keep seq colls))]
+     (concat (map first non-empties)
+             (apply interleave-all (map rest colls))))))
+
+(defn values
+  "Extract a seq of all the values in the node. Values are returned sorted."
+  [node]
+  (if (nil? node)
+    []
+    (concat (values (:left node))
+            (if (:deleted? node) [] [(:value node)])
+            (values (:right node)))))
+
+(defn normalize "Balance the tree and remove any deleted nodes."
+  [tree]
+  (let [;; Extract all values (sorted)
+        values         (values tree)
+        ;; Split in two
+        [lower higher] (split-at (/ (count values) 2) values)
+        ;; Interleave the reversed lower values and the higher values
+        insert-seq     (interleave-all higher (reverse lower))]
+    ;; Use this sequence to create a balanced tree.
+    (create-tree insert-seq)))

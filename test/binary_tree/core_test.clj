@@ -15,3 +15,6 @@
   (let [tree (create-tree (filter even? (range 1 11)))]
     (is (not (includes?
               (-> tree (delete 4)) 4)))))
+
+(deftest extract-values
+  (is (= [1 3 5 7 9 11] (values (create-tree [5 7 3 1 11 9])))))

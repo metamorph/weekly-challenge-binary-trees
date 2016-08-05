@@ -71,10 +71,16 @@ Deleting nodes:
  :deleted? false}
 ```
 
+Balance the tree (and remove any deleted nodes)
+
+``` clojure
+(normalize tree)
+
+```
+
 ## To be done
 
 * Balancing a tree
-  * Manually
   * Automatically
 
 ## License
