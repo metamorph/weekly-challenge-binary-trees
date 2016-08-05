@@ -24,6 +24,31 @@ Create a tree:
     :right {:value 5, :left nil, :right nil}}
 ```
 
+Inserting values:
+
+``` clojure
+(def tree (create-tree [3 5]))
+
+(insert tree 10)
+
+;;=>
+{:value 3,
+  :left nil,
+  :right {:value 5, :left nil,
+    :right {:value 10, :left nil, :right nil}}}
+
+(-> tree
+    (insert 10)
+    (insert 1))
+
+;;=>
+{:value 3,
+  :left {:value 1, :left nil, :right nil},
+  :right {:value 5, :left nil,
+    :right {:value 10, :left nil, :right nil}}}
+
+```
+
 Finding stuff:
 
 ``` clojure
