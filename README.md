@@ -58,9 +58,21 @@ Finding stuff:
 (includes? tree 1) ;;=> false
 ```
 
+Deleting nodes:
+
+``` clojure
+(def tree (create-tree [3 5 2]))
+
+(delete tree 5)
+
+;;=> {:value 3,
+ :left {:value 2, :left nil, :right nil, :deleted? false},
+ :right {:value 5, :left nil, :right nil, :deleted? true},
+ :deleted? false}
+```
+
 ## To be done
 
-* Deleting nodes
 * Balancing a tree
   * Manually
   * Automatically
